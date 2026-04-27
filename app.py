@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import cv2
 import json
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import gdown
 import os
 
