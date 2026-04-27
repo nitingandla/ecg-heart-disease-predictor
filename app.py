@@ -2,20 +2,11 @@ import streamlit as st
 import numpy as np
 import cv2
 import json
-import os
-import gdown
 import onnxruntime as ort
-
-MODEL_PATH = "ecg_best.onnx"
-GDRIVE_URL = "https://drive.google.com/file/d/1guD3BR7zzznA5pT9fFmBk1CXlA9LYRUp/view?usp=sharing"
 
 @st.cache_resource
 def load_model():
-    if not os.path.exists(MODEL_PATH):
-        with st.spinner("Downloading model..."):
-            gdown.download(GDRIVE_URL, MODEL_PATH, quiet=False)
-    session = ort.InferenceSession(MODEL_PATH)
-    return session
+    return ort.InferenceSession("ecg_best.onnx")
 
 @st.cache_resource
 def load_classes():
@@ -54,7 +45,6 @@ def draw_grid_and_extract(file_bytes):
             leads.append(lead if lead.size > 0 else np.zeros((50, 50, 3), dtype=np.uint8))
     return overlay, leads
 
-# --- UI ---
 st.title("ECG AI Diagnostic System")
 
 file = st.file_uploader("Upload ECG Image", type=["jpg", "png", "jpeg"])
