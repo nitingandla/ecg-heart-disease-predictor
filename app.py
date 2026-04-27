@@ -8,13 +8,11 @@ import os
 
 MODEL_PATH = "ecg_best.keras"
 
-@st.cache_resource
-def load_my_model():
-    if not os.path.exists(MODEL_PATH):
-        url = "https://drive.google.com/uc?id=1n_gG5GKrASevebgZRVm5J-W1xTsg8uWQ"
-        gdown.download(url, MODEL_PATH, quiet=False)
+if not os.path.exists(MODEL_PATH):
+    url = "https://drive.google.com/uc?id=1n_gG5GKrASevebgZRVm5J-W1xTsg8uWQ"
+    gdown.download(url, MODEL_PATH, quiet=False)
 
-    return load_model(MODEL_PATH)
+model = load_model(MODEL_PATH)
 
 model = load_my_model()
 
